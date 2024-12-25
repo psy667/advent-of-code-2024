@@ -1,5 +1,3 @@
-import { isStringNumber, reduce, minus, every, func, assert } from './index';
-
 export const str = {
     split: (separator: string) => (val: string) => val.split(separator),
     isStringNumber: () => (val: string) => !Number.isNaN(Number(val)),
@@ -14,11 +12,7 @@ export const str = {
     fromJSON: () => val => JSON.parse(val),
 }
 
-
-
-
 const id = x => x
-
 
 type Func<T, R> = (arg: T) => R;
 type IdFn<T> = Func<T, T>
@@ -177,83 +171,3 @@ export const fn = {
     curry,
     uncurry,
 }
-
-// return pipe(
-//     splitByLine(),
-//     map(pipe(
-//         split(''),
-//         filter(isStringNumber),
-//         join('')
-//     )),
-//     map(it => takeFirst(it) + takeLast(it)),
-//     map(toInt),
-//     reduce(sum)
-// )(input)
-
-
-
-const sol1 = flow.pipe(
-    str.split('\n'),
-    arr.map(
-        str.split(''),
-        arr.filter(str.isStringNumber),
-        arr.join('')
-    ),
-    arr.map(
-        flow.fork(
-            str.at(0),
-            str.at(-1)
-        ),
-        arr.join(''),
-        str.toInt(),
-    ),
-    arr.sum(),
-)
-
-// export function solution1(input: string) {
-//     return pipe(
-//         splitByLine(),
-//         map(pipe(
-//             split('   '),
-//             map(toInt)
-//         )),
-//         fork(
-//             map(takeFirst),
-//             map(takeLast)
-//         ),
-//         map(sort('asc')),
-//         zip((x,y) => Math.abs(x - y)),
-//         fold(0, sum)
-//     )(input)
-// }
-
-// const sum = arr.fold(0, (a) => (b) => {
-//     console.log(a,b)
-//     return uncurry(num.plus)(a,b)
-// })
-
-const sol2 = flow.pipe(
-    (it: string) => it,
-    str.split('\n'),
-    arr.map(
-        str.toInt(),
-    ),
-    arr.map(
-        str.split('   '),
-        arr.map(str.toInt()),
-    ),
-    flow.fork(
-        arr.map(str.at(0)),
-        arr.map(str.at(-1))
-    ),
-    arr.map(arr.sort('asc')),
-    arr.zip(num.sub),
-    arr.map(num.abs()),
-)
-
-// console.log(sol2(`3   4
-// 4   3
-// 2   5
-// 1   3
-// 3   9
-// 3   3`))

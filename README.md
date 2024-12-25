@@ -1,12 +1,12 @@
 # advent-of-code-2024
 
-To install dependencies:
+To run:
 
 ```bash
-bun install
+bun run index.ts day14
 ```
 
-To run:
+or to run all
 
 ```bash
 bun run index.ts

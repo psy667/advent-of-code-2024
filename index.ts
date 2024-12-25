@@ -42,9 +42,17 @@ if(Bun.argv[2] === 'until') {
         await run(path)
         console.log('\n')
     }
-} else {
+} else if(Bun.argv[2]) {
     const path = `./` + Bun.argv[2]
 
     run(path)
+} else {
+    for(let i = 1; i <= 25; i++) {
+        const day = `day` + i.toString().padStart(2, '0') 
+        const path =  `./` + day
+        console.log(day)
+        await run(path)
+        console.log('\n')
+    }
 }
 
